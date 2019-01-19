@@ -4,11 +4,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>ESIEA</groupId>
-  <artifactId>Project</artifactId>
+  <groupId>fr.esiea</groupId>
+  <artifactId>supermarket-receipt</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>Project</name>
+  <name>supermarket-receipt</name>
   <description>A simple Project.</description>
   <url>https://github.com/SylvainVerdy/supermarket-receipt.git</url>
 
@@ -31,6 +31,12 @@
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <version>3.8.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>RELEASE</version>
       <scope>test</scope>
     </dependency>
 
