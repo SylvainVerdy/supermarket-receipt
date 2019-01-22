@@ -3,6 +3,9 @@ package fr.esiea.supermarket.model;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.Map;
+
 public class SupermarketTest {
 
     @Test
@@ -30,29 +33,21 @@ public class SupermarketTest {
     }
 
     @Test
-    public void testDiscount(){
+    public void testTenPercentDiscount(){
         SupermarketCatalog catalog = new FakeCatalog();
         Product toothbrush = new Product("toothbrush", ProductUnit.Each);
-        catalog.addProduct(toothbrush, 1.00);
-
-        Product oranges = new Product("orange", ProductUnit.Each);
-        catalog.addProduct(oranges, 2.00);
-
-        Discount discountToothbrush = new Discount(toothbrush, "For better teeth", 0.3);
-        Discount discountOranges = new Discount(oranges, "For better health", 0.5);
+        catalog.addProduct(toothbrush, 2.00);
 
         ShoppingCart cart = new ShoppingCart();
-        cart.addItemQuantity(oranges, 3);
         cart.addItemQuantity(toothbrush, 2);
 
         Teller teller = new Teller(catalog);
+        teller.addSpecialOffer(SpecialOfferType.TenPercentDiscount, toothbrush, 10.0);
+
         Receipt receipt = teller.checksOutArticlesFrom(cart);
 
-        receipt.addDiscount(discountOranges);
-        receipt.addDiscount(discountToothbrush);
-
         double perceivedValue = receipt.getTotalPrice();
-        double expectedValue = 4.4; // expected 7.2?
+        double expectedValue = 3.6;
 
         Assertions.assertThat(perceivedValue).isEqualTo(expectedValue);
     }
@@ -64,5 +59,16 @@ public class SupermarketTest {
         catalog.addProduct(toothbrush, 1.00);
 
         Assertions.assertThat(catalog.getUnitPrice(toothbrush)).isNotNull();
+    }
+
+    @Test
+    public void testShoppingCartAdd(){
+        Product toothbrush = new Product("toothbrush", ProductUnit.Each);
+        ShoppingCart cart = new ShoppingCart();
+        cart.addItemQuantity(toothbrush, 3);
+
+        Map<Product, Double> items = cart.productQuantities();
+
+        Assertions.assertThat(items.containsKey(toothbrush)).isTrue();
     }
 }
