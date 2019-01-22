@@ -1,5 +1,6 @@
 package fr.esiea.supermarket.model;
 
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,7 @@ public class SupermarketTest {
         Product apples = new Product("apples", ProductUnit.Kilo);
         catalog.addProduct(apples, 1.99);
 
+
         ShoppingCart cart = new ShoppingCart();
         cart.addItemQuantity(apples, 2.5);
 
@@ -24,11 +26,8 @@ public class SupermarketTest {
 
         Receipt receipt = teller.checksOutArticlesFrom(cart);
 
-        double productValue = receipt.getTotalPrice();
         double expectedProductValue = 4.975;
-
-        Assertions.assertThat(catalog).isInstanceOf(FakeCatalog.class);
-        Assertions.assertThat(toothbrush).isInstanceOf(Product.class);
+        double productValue = receipt.getTotalPrice();
         Assertions.assertThat(productValue).isEqualTo(expectedProductValue);
     }
 
