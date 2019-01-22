@@ -1,5 +1,6 @@
 package fr.esiea.supermarket.model;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class SupermarketTest {
@@ -20,6 +21,13 @@ public class SupermarketTest {
 
         Receipt receipt = teller.checksOutArticlesFrom(cart);
 
-        // Todo: complete this test
+        double productValue = receipt.getTotalPrice();
+        double expectedProductValue = 4.975;
+
+        Assertions.assertThat(catalog).isInstanceOf(FakeCatalog.class);
+        Assertions.assertThat(toothbrush).isInstanceOf(Product.class);
+        Assertions.assertThat(productValue).isEqualTo(expectedProductValue);
+
+
     }
 }
