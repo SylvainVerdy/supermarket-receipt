@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.within;
+
 public class SupermarketTest {
 
     @Test
@@ -110,6 +112,38 @@ public class SupermarketTest {
 
         Assertions.assertThat(perceivedValue).isEqualTo(expectedValue);
     }
+
+    @Test
+    public void testTenPercentForEachOfThem(){
+        //TODO complete the test
+        SupermarketCatalog catalog = new FakeCatalog();
+        Teller teller = new Teller(catalog);
+
+        Product toothbrush = new Product("toothbrush", ProductUnit.Each);
+        Product banana = new Product("banana",ProductUnit.Each);
+        catalog.addProduct(banana,2.00);
+        catalog.addProduct(toothbrush,1.00);
+        teller.addSpecialOffer(SpecialOfferType.TenPercentForEachOneOfThem, toothbrush, 2);
+        teller.addSpecialOffer(SpecialOfferType.TenPercentForEachOneOfThem,banana,3);
+        ShoppingCart cart = new ShoppingCart();
+        cart.addItemQuantity(toothbrush, 2);
+        cart.addItemQuantity(banana,3);
+
+
+
+        Receipt receipt = teller.checksOutArticlesFrom(cart);
+
+        double perceivedValue = receipt.getTotalPrice();
+        double expectedValue = 7.70;
+
+
+
+        Assertions.assertThat(perceivedValue).isEqualTo(expectedValue , within(0.001));
+
+    }
+
+
+
 
     @Test
     public void testCatalogAdd(){

@@ -1,5 +1,5 @@
 package fr.esiea.supermarket.model;
 
 public enum SpecialOfferType {
-    ThreeForTwo, TenPercentDiscount, TwoForAmount, FiveForAmount;
+    ThreeForTwo, TenPercentDiscount, TwoForAmount, FiveForAmount, TenPercentForEachOneOfThem;
 }
