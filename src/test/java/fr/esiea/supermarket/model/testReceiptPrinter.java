@@ -28,7 +28,6 @@ public class testReceiptPrinter {
     @Test
     public void testReceiptPrinter() {
         Receipt receipt = createAnReceipt();
-        //String whiteSpace = getWhitespace()
         String testItemPrinter = "toothbrush                          2.00\n  1.00 * 2\nbanana                              6.00\n  2.00 * 3\napples                              4.50\n  1.50 * 3\n\nTotal:                             12.50";
         assertThat(new ReceiptPrinter().printReceipt(receipt)).isEqualTo(testItemPrinter);
         assertThat(receipt.getItems().size()).isEqualTo(3);
