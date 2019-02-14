@@ -1,6 +1,5 @@
 package fr.esiea.supermarket.model;
 
-import java.util.Objects;
 
 public class ReceiptItem {
     private final Product product;

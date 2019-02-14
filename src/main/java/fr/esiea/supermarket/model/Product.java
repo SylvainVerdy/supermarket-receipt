@@ -1,7 +1,5 @@
 package fr.esiea.supermarket.model;
 
-import java.util.Objects;
-
 public class Product {
     private final String name;
     private final ProductUnit unit;

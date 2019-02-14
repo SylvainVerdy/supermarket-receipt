@@ -26,10 +26,20 @@ public class TestReceiptPrinter {
         cart.addItemQuantity(apples,3);
 
         Teller teller = new Teller(catalog);
+        teller.addSpecialOffer(SpecialOfferType.ThreeForTwo, toothbrush, 1);
+        teller.addSpecialOffer(SpecialOfferType.TenPercentDiscount, banana, 1);
         Receipt receipt = teller.checksOutArticlesFrom(cart);
         ReceiptPrinter defaultReceiptPrinter = new ReceiptPrinter();
 
-        String expectedReceiptPrinter ="toothbrush                          2.00\n  1.00 * 2\nbanana                              6.00\n  2.00 * 3\napples                              4.50\n  1.50 * 3\n\nTotal:                             12.50";
+        String expectedReceiptPrinter ="toothbrush                          2.00\n" +
+                                        "  1.00 * 2\n" +
+                                        "banana                              6.00\n" +
+                                        "  2.00 * 3\n" +
+                                        "apples                              4.50\n" +
+                                        "  1.50 * 3\n" +
+                                        "1.0% off(banana)                   -0.06\n"+
+                                        "\n" +
+                                        "Total:                             12.44";
 
         Assertions.assertThat(expectedReceiptPrinter).isEqualTo(defaultReceiptPrinter.printReceipt(receipt));
         Assertions.assertThat(receipt.getItems().size()).isEqualTo(3);
