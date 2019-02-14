@@ -1,10 +1,7 @@
 package fr.esiea.supermarket.model;
 
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.within;
@@ -12,7 +9,7 @@ import static org.assertj.core.api.Assertions.within;
 public class SupermarketTest {
 
     @Test
-    public void testSomething() {
+    public void testOneProduct() {
         SupermarketCatalog catalog = new FakeCatalog();
         Product toothbrush = new Product("toothbrush", ProductUnit.Each);
         catalog.addProduct(toothbrush, 0.99);

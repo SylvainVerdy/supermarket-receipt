@@ -15,15 +15,19 @@ public class TestReceiptPrinter {
         Product toothbrush = new Product("toothbrush", ProductUnit.Each);
         Product banana = new Product("banana",ProductUnit.Each);
         Product apples = new Product("apples",ProductUnit.Each);
+        Product lemon = new Product("lemon",ProductUnit.Each);
 
         catalog.addProduct(toothbrush,1.00);
         catalog.addProduct(banana,2.00);
         catalog.addProduct(apples,1.50);
+        catalog.addProduct(lemon,1.00);
+
 
         ShoppingCart cart = new ShoppingCart();
         cart.addItemQuantity(toothbrush, 2);
         cart.addItemQuantity(banana,3);
         cart.addItemQuantity(apples,3);
+        cart.addItemQuantity(lemon,1);
 
         Teller teller = new Teller(catalog);
         teller.addSpecialOffer(SpecialOfferType.ThreeForTwo, toothbrush, 1);
@@ -37,12 +41,13 @@ public class TestReceiptPrinter {
                                         "  2.00 * 3\n" +
                                         "apples                              4.50\n" +
                                         "  1.50 * 3\n" +
+                                        "lemon                               1.00\n"+
                                         "1.0% off(banana)                   -0.06\n"+
                                         "\n" +
-                                        "Total:                             12.44";
+                                        "Total:                             13.44";
 
         Assertions.assertThat(expectedReceiptPrinter).isEqualTo(defaultReceiptPrinter.printReceipt(receipt));
-        Assertions.assertThat(receipt.getItems().size()).isEqualTo(3);
+        Assertions.assertThat(receipt.getItems().size()).isEqualTo(4);
         Assertions.assertThat(new ReceiptPrinter().printReceipt(receipt)).isNotBlank();
     }
 
