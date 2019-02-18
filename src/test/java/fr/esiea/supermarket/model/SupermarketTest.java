@@ -82,6 +82,7 @@ public class SupermarketTest {
     }
 
     @Test
+
     public void testThreeForTwoDiscountSuperiorTo2(){
         SupermarketCatalog catalog = new FakeCatalog();
         Product apples = new Product("apples", ProductUnit.Each);
@@ -89,10 +90,8 @@ public class SupermarketTest {
 
         ShoppingCart cart = new ShoppingCart();
         cart.addItemQuantity(apples, 3);
-
         Teller teller = new Teller(catalog);
         teller.addSpecialOffer(SpecialOfferType.ThreeForTwo, apples, 10.0);
-
         Receipt receipt = teller.checksOutArticlesFrom(cart);
 
         double perceivedValue = receipt.getTotalPrice();
@@ -116,14 +115,14 @@ public class SupermarketTest {
         Receipt receipt = teller.checksOutArticlesFrom(cart);
 
         double perceivedValue = receipt.getTotalPrice();
-        double expectedValue = (2.0);
+        double expectedValue = 2.0;
+
 
         Assertions.assertThat(expectedValue).isEqualTo(perceivedValue);
     }
 
     @Test
     public void testTwoForAmountDiscountSuperiorTo2 () {
-
         SupermarketCatalog catalog = new FakeCatalog();
         Product apples = new Product("apples", ProductUnit.Each);
         catalog.addProduct(apples, 2.00);
@@ -149,7 +148,6 @@ public class SupermarketTest {
 
         ShoppingCart cart = new ShoppingCart();
         cart.addItemQuantity(apples, 6);
-
         Teller teller = new Teller(catalog);
         teller.addSpecialOffer(SpecialOfferType.FiveForAmount, apples, 1);
 
