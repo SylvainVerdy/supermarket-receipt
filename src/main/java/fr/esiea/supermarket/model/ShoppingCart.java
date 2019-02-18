@@ -78,7 +78,6 @@ public class ShoppingCart {
                     System.out.println(discountForEach+"discount"+discountValue);
                     discount = new Discount(p,x+" for "+offer.argument, discountForEach);
 
-                    //TODO Complete the code Each product have a reduction(-10%) for one of them articles like : 1 orange+ 2 apples = price(1* orange-10%)+ (2 apples= (1apple*(- 10%))+ 1 apple) = totalprice
                 }
                 if (discount != null)
                     receipt.addDiscount(discount);

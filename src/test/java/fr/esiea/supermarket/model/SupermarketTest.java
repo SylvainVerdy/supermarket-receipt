@@ -2,6 +2,8 @@ package fr.esiea.supermarket.model;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.within;
@@ -28,6 +30,11 @@ public class SupermarketTest {
         double expectedProductValue = 4.975;
         double productValue = receipt.getTotalPrice();
         Assertions.assertThat(productValue).isEqualTo(expectedProductValue);
+
+
+        Offer offer = new Offer(SpecialOfferType.TenPercentDiscount, toothbrush, 10.0);
+        Product expectedResult = toothbrush;
+        Assertions.assertThat(expectedResult).isEqualTo(offer.getProduct());
     }
 
     @Test
@@ -112,7 +119,6 @@ public class SupermarketTest {
 
     @Test
     public void testTenPercentForEachOfThem(){
-        //TODO complete the test
         SupermarketCatalog catalog = new FakeCatalog();
         Teller teller = new Teller(catalog);
 
@@ -126,21 +132,14 @@ public class SupermarketTest {
         cart.addItemQuantity(toothbrush, 2);
         cart.addItemQuantity(banana,3);
 
-
-
         Receipt receipt = teller.checksOutArticlesFrom(cart);
 
         double perceivedValue = receipt.getTotalPrice();
         double expectedValue = 7.70;
 
-
-
         Assertions.assertThat(perceivedValue).isEqualTo(expectedValue , within(0.001));
 
     }
-
-
-
 
     @Test
     public void testCatalogAdd(){
@@ -149,6 +148,16 @@ public class SupermarketTest {
         catalog.addProduct(toothbrush, 1.00);
 
         Assertions.assertThat(catalog.getUnitPrice(toothbrush)).isNotNull();
+    }
+
+    @Test
+    public void testListItemNotEmpty(){
+        Product toothbrush = new Product("toothbrush", ProductUnit.Each);
+        ShoppingCart cart = new ShoppingCart();
+        cart.addItem(toothbrush);
+        List<ProductQuantity> listItems = cart.getItems();
+
+        Assertions.assertThat(listItems).isNull();
     }
 
     @Test
@@ -162,5 +171,28 @@ public class SupermarketTest {
         Assertions.assertThat(items.containsKey(toothbrush)).isTrue();
     }
 
+    @Test
+    public void testAddItemQuantityWhileAlreadyAnItem () {
+        Product toothbrush = new Product("toothbrush", ProductUnit.Each);
+        ShoppingCart cart = new ShoppingCart();
+        cart.addItem(toothbrush);
+        cart.addItem(toothbrush);
+        Map<Product, Double> productQuantities = cart.productQuantities();
+        double itemQuantity = productQuantities.get(toothbrush);
+        double expectedItemQuantity = 2.0;
+        Assertions.assertThat(expectedItemQuantity).isEqualTo(itemQuantity);
+    }
+
+    @Test
+    public void testOneItemQuantity () {
+        Product toothbrush = new Product("toothbrush", ProductUnit.Each);
+        ShoppingCart cart = new ShoppingCart();
+        cart.addItem(toothbrush);
+        Map<Product, Double> productQuantities = cart.productQuantities();
+        double productQuantity = productQuantities.get(toothbrush);
+
+        double expectedProductQuantity = 1.0;
+        Assertions.assertThat(expectedProductQuantity).isEqualTo(productQuantity);
+    }
 
 }
