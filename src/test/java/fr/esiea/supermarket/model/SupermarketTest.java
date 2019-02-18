@@ -41,18 +41,22 @@ public class SupermarketTest {
     public void testTenPercentDiscount(){
         SupermarketCatalog catalog = new FakeCatalog();
         Product toothbrush = new Product("toothbrush", ProductUnit.Each);
+        Product soap = new Product("soap", ProductUnit.Each);
         catalog.addProduct(toothbrush, 2.00);
+        catalog.addProduct(soap, 3.00);
 
         ShoppingCart cart = new ShoppingCart();
         cart.addItemQuantity(toothbrush, 2);
+        cart.addItemQuantity(soap, 4);
 
         Teller teller = new Teller(catalog);
         teller.addSpecialOffer(SpecialOfferType.TenPercentDiscount, toothbrush, 10.0);
+        teller.addSpecialOffer(SpecialOfferType.TenPercentDiscount, soap, 10.0);
 
         Receipt receipt = teller.checksOutArticlesFrom(cart);
 
         double perceivedValue = receipt.getTotalPrice();
-        double expectedValue = 3.6;
+        double expectedValue = 14.4;
 
         Assertions.assertThat(perceivedValue).isEqualTo(expectedValue);
     }
@@ -67,7 +71,27 @@ public class SupermarketTest {
         cart.addItemQuantity(apples, 3);
 
         Teller teller = new Teller(catalog);
-        teller.addSpecialOffer(SpecialOfferType.ThreeForTwo, apples, 0);
+        teller.addSpecialOffer(SpecialOfferType.ThreeForTwo, apples, 10.0);
+
+        Receipt receipt = teller.checksOutArticlesFrom(cart);
+
+        double perceivedValue = receipt.getTotalPrice();
+        double expectedValue = 4.0;
+
+        Assertions.assertThat(perceivedValue).isEqualTo(expectedValue);
+    }
+
+    @Test
+    public void testThreeForTwoDiscountSuperiorTo2(){
+        SupermarketCatalog catalog = new FakeCatalog();
+        Product apples = new Product("apples", ProductUnit.Each);
+        catalog.addProduct(apples, 2.00);
+
+        ShoppingCart cart = new ShoppingCart();
+        cart.addItemQuantity(apples, 3);
+
+        Teller teller = new Teller(catalog);
+        teller.addSpecialOffer(SpecialOfferType.ThreeForTwo, apples, 10.0);
 
         Receipt receipt = teller.checksOutArticlesFrom(cart);
 
@@ -84,7 +108,7 @@ public class SupermarketTest {
         catalog.addProduct(apples, 2.00);
 
         ShoppingCart cart = new ShoppingCart();
-        cart.addItemQuantity(apples, 4);
+        cart.addItemQuantity(apples, 2);
 
         Teller teller = new Teller(catalog);
         teller.addSpecialOffer(SpecialOfferType.TwoForAmount, apples, 2);
@@ -92,7 +116,47 @@ public class SupermarketTest {
         Receipt receipt = teller.checksOutArticlesFrom(cart);
 
         double perceivedValue = receipt.getTotalPrice();
-        double expectedValue = 4.0;
+        double expectedValue = (2.0);
+
+        Assertions.assertThat(expectedValue).isEqualTo(perceivedValue);
+    }
+
+    @Test
+    public void testTwoForAmountDiscountSuperiorTo2 () {
+
+        SupermarketCatalog catalog = new FakeCatalog();
+        Product apples = new Product("apples", ProductUnit.Each);
+        catalog.addProduct(apples, 2.00);
+
+        ShoppingCart cart = new ShoppingCart();
+        cart.addItemQuantity(apples, 4);
+
+        Teller teller = new Teller(catalog);
+        teller.addSpecialOffer(SpecialOfferType.TwoForAmount, apples, 3);
+        Receipt receipt = teller.checksOutArticlesFrom(cart);
+
+        double perceivedValue = receipt.getTotalPrice();
+        double expectedValue = 6.0;
+
+        Assertions.assertThat(expectedValue).isEqualTo(perceivedValue);
+    }
+
+    @Test
+    public void testFiveForAmountDiscountSuperiorTo5 (){
+        SupermarketCatalog catalog = new FakeCatalog();
+        Product apples = new Product("apples", ProductUnit.Each);
+        catalog.addProduct(apples, 2.00);
+
+        ShoppingCart cart = new ShoppingCart();
+        cart.addItemQuantity(apples, 6);
+
+        Teller teller = new Teller(catalog);
+        teller.addSpecialOffer(SpecialOfferType.FiveForAmount, apples, 1);
+
+        Receipt receipt = teller.checksOutArticlesFrom(cart);
+
+        double perceivedValue = receipt.getTotalPrice();
+        double expectedValue = 3.0;
 
         Assertions.assertThat(perceivedValue).isEqualTo(expectedValue);
     }
@@ -151,16 +215,6 @@ public class SupermarketTest {
     }
 
     @Test
-    public void testListItemNotEmpty(){
-        Product toothbrush = new Product("toothbrush", ProductUnit.Each);
-        ShoppingCart cart = new ShoppingCart();
-        cart.addItem(toothbrush);
-        List<ProductQuantity> listItems = cart.getItems();
-
-        Assertions.assertThat(listItems).isNull();
-    }
-
-    @Test
     public void testShoppingCartAdd(){
         Product toothbrush = new Product("toothbrush", ProductUnit.Each);
         ShoppingCart cart = new ShoppingCart();
@@ -169,6 +223,16 @@ public class SupermarketTest {
         Map<Product, Double> items = cart.productQuantities();
 
         Assertions.assertThat(items.containsKey(toothbrush)).isTrue();
+    }
+
+    @Test
+    public void testListItemNotEmpty(){
+        Product toothbrush = new Product("toothbrush", ProductUnit.Each);
+        ShoppingCart cart = new ShoppingCart();
+        cart.addItem(toothbrush);
+        List<ProductQuantity> listItems = cart.getItems();
+
+        Assertions.assertThat(listItems).isNotNull();
     }
 
     @Test
