@@ -1,4 +1,4 @@
-package fr.esiea.supermarket.infrastracture;
+package fr.esiea.supermarket.model;
 
 import fr.esiea.supermarket.model.Product;
 import fr.esiea.supermarket.model.SupermarketCatalog;

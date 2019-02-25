@@ -2,7 +2,7 @@ package fr.esiea.supermarket.web.spring;
 
 
 import java.util.Collection;
-import fr.esiea.supermarket.infrastracture.BasicCatalog;
+import fr.esiea.supermarket.model.BasicCatalog;
 import fr.esiea.supermarket.model.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
