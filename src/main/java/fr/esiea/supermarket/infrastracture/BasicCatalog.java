@@ -1,11 +1,14 @@
-package fr.esiea.supermarket.model;
+package fr.esiea.supermarket.infrastracture;
+
+import fr.esiea.supermarket.model.Product;
+import fr.esiea.supermarket.model.SupermarketCatalog;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FakeCatalog implements SupermarketCatalog {
+public class BasicCatalog implements SupermarketCatalog {
     private Map<String, Product> products = new HashMap<>();
     private Map<String, Double> prices = new HashMap<>();
 
@@ -22,16 +25,19 @@ public class FakeCatalog implements SupermarketCatalog {
 
     @Override
     public void deleteProduct(String name) {
-
+        this.products.remove(name);
+        this.prices.remove(name);
     }
 
     @Override
     public Collection<Product> getProducts() {
-        return null;
+        return products.values();
     }
 
     @Override
     public Product getProductByName(String productName) {
-        return null;
+        return products.get(productName);
     }
+
+
 }
