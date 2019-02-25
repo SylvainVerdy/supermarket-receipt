@@ -1,5 +1,6 @@
 package fr.esiea.supermarket.model;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +67,16 @@ public class ShoppingCart {
                 if (offer.offerType == SpecialOfferType.FiveForAmount && quantityAsInt >= 5) {
                     double discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + quantityAsInt % 5 * unitPrice);
                     discount = new Discount(p, x + " for " + offer.argument, discountTotal);
+                    System.out.println(discountTotal);
+                }
+                if (offer.offerType == SpecialOfferType.TenPercentForEachOneOfThem && quantityAsInt>=2){
+                    double discountValue = ((unitPrice*0.9)+(quantityAsInt-1)*unitPrice);
+                    double discountForEach= unitPrice*quantity - discountValue;
+
+
+                    System.out.println(discountForEach+"discount"+discountValue);
+                    discount = new Discount(p,x+" for "+offer.argument, discountForEach);
+
                 }
                 if (discount != null)
                     receipt.addDiscount(discount);
