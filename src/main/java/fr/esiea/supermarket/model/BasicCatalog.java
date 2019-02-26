@@ -12,6 +12,7 @@ public class BasicCatalog implements SupermarketCatalog {
     private Map<String, Product> products = new HashMap<>();
     private Map<String, Double> prices = new HashMap<>();
 
+
     @Override
     public void addProduct(Product product, double price) {
         this.products.put(product.getName(), product);
@@ -38,6 +39,5 @@ public class BasicCatalog implements SupermarketCatalog {
     public Product getProductByName(String productName) {
         return products.get(productName);
     }
-
 
 }

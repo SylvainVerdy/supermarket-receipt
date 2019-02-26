@@ -1,10 +1,7 @@
 package fr.esiea.supermarket.model;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ShoppingCart {
 
@@ -30,6 +27,24 @@ public class ShoppingCart {
             productQuantities.put(product, productQuantities.get(product) + quantity);
         } else {
             productQuantities.put(product, quantity);
+        }
+    }
+
+    public void removeItem(Product product){
+        if (productQuantities.containsKey(product)) {
+            // we had to remove the element like this
+            Iterator<ProductQuantity> it = items.iterator();
+            while(it.hasNext())
+            {
+                ProductQuantity pq = it.next();
+                if(pq.getProduct().getName().equals(product.getName()))
+                {
+                    it.remove();
+                    break;
+                }
+            }
+
+            productQuantities.remove(product);
         }
     }
 
