@@ -62,6 +62,14 @@ public class TestWebService {
         Product product = springWebApplication.listSellableProducts().iterator().next();
         Assertions.assertThat(springWebApplication.addClient(1)).isEqualTo(-1);
     }
-
+    @Test
+    void testAddCartClient(){
+        SpringWebApplication springWebApplication = new SpringWebApplication();
+        springWebApplication.addProduct("frites","kilo", "2.2");
+        Product product = springWebApplication.addProductToClientCart(1,"frites",2);
+        ShoppingCart cart = new ShoppingCart();
+        cart.addItemQuantity(product,3);
+        Assertions.assertThat(cart.productQuantities()).isNotEmpty();
+    }
 
 }
