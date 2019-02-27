@@ -48,8 +48,16 @@ public class TestWebService {
         Product product = springWebApplication.addSpecialOffer().iterator().next();
         Assertions.assertThat(springWebApplication.addSpecialOffer().iterator().next()).isEqualTo(product);
 
-
     }
+
+    @Test
+    public void TestDeleteSpecialOffer() {
+
+        SpringWebApplication springWebApplication = new SpringWebApplication();
+        springWebApplication.deleteSpecialOffer("TenPercent", "Banana", "10");
+        Product product = springWebApplication.deleteSpecialOffer().iterator().next();
+        Assertions.assertThat(deleteSpecialOffer().equals("10")).isFalse();
+
 
 
 }
