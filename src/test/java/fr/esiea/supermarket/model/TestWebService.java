@@ -28,7 +28,7 @@ public class TestWebService {
     public void TestAddProduct(){
 
         SpringWebApplication springWebApplication = new SpringWebApplication();
-        springWebApplication.addProduct("banana", "kilo", "1.0");
+        springWebApplication.addProduct("banana", "Kilo", "1.0");
 
         Product product = springWebApplication.listSellableProducts().iterator().next();
         Assertions.assertThat(product.getName().equals("banana")).isTrue();
@@ -38,7 +38,7 @@ public class TestWebService {
     @Test
     public void testListSellableProducts() {
         SpringWebApplication springWebApplication = new SpringWebApplication();
-        springWebApplication.addProduct("banana", "kilo", "1.0");
+        springWebApplication.addProduct("banana", "Kilo", "1.0");
         Product product = springWebApplication.listSellableProducts().iterator().next();
         Assertions.assertThat(springWebApplication.listSellableProducts().iterator().next()).isEqualTo(product);
     }
@@ -46,8 +46,8 @@ public class TestWebService {
     @Test
     void testRemoveProduct() {
         SpringWebApplication springWebApplication = new SpringWebApplication();
-        final Product bagofrice = new Product("frites", ProductUnit.Each);
-        springWebApplication.addProduct("frites","kilo", "2.2");
+
+        springWebApplication.addProduct("frites","Kilo", "2.2");
 
         Product product = springWebApplication.listSellableProducts().iterator().next();
         springWebApplication.deleteProduct("frites");
@@ -57,7 +57,7 @@ public class TestWebService {
     @Test
     void testAddClient(){
         SpringWebApplication springWebApplication = new SpringWebApplication();
-        springWebApplication.addProduct("frites","kilo", "2.2");
+        springWebApplication.addProduct("frites","Kilo", "2.2");
         springWebApplication.addClient(1);
         Product panier_produit1 = springWebApplication.addProductToClientCart(1,"banana",2);
         Product product = springWebApplication.listSellableProducts().iterator().next();
@@ -66,7 +66,7 @@ public class TestWebService {
     @Test
     void testAddCartClient(){
         SpringWebApplication springWebApplication = new SpringWebApplication();
-        springWebApplication.addProduct("frites","kilo", "2.2");
+        springWebApplication.addProduct("frites","Kilo", "2.2");
         Product product = springWebApplication.addProductToClientCart(1,"frites",2);
         ShoppingCart cart = new ShoppingCart();
         cart.addItemQuantity(product,3);
@@ -78,7 +78,7 @@ public class TestWebService {
     @Test
     void testPassageEnCaisse(){
         SpringWebApplication springWebApplication = new SpringWebApplication();
-        springWebApplication.addProduct("frites","kilo", "2.2");
+        springWebApplication.addProduct("frites","Kilo", "2.2");
         springWebApplication.addClient(1);
         Product product = springWebApplication.addProductToClientCart(1,"frites",2);
         ShoppingCart cart = new ShoppingCart();
@@ -92,7 +92,7 @@ public class TestWebService {
     public void testSpecialOfferTenPercentDiscount(){
 
         SpringWebApplication springWebApplication = new SpringWebApplication();
-        springWebApplication.addProduct("banana", "kilo", "1.0");
+        springWebApplication.addProduct("banana", "Kilo", "1.0");
         springWebApplication.addClient(1);
 
         springWebApplication.addProductToClientCart(1,"banana",10);
@@ -107,7 +107,7 @@ public class TestWebService {
     public void testSpecialOfferThreeForTwo(){
 
         SpringWebApplication springWebApplication = new SpringWebApplication();
-        springWebApplication.addProduct("banana", "kilo", "1.0");
+        springWebApplication.addProduct("banana", "Kilo", "1.0");
         springWebApplication.addClient(1);
 
         springWebApplication.addProductToClientCart(1,"banana",10);
@@ -120,7 +120,7 @@ public class TestWebService {
     public void testSpecialOfferFiveForAmount(){
 
         SpringWebApplication springWebApplication = new SpringWebApplication();
-        springWebApplication.addProduct("banana", "kilo", "1.0");
+        springWebApplication.addProduct("banana", "Kilo", "1.0");
         springWebApplication.addClient(1);
 
         springWebApplication.addProductToClientCart(1,"banana",10);
@@ -133,7 +133,7 @@ public class TestWebService {
     public void testSpecialOfferTwoForAmount(){
 
         SpringWebApplication springWebApplication = new SpringWebApplication();
-        springWebApplication.addProduct("banana", "kilo", "1.0");
+        springWebApplication.addProduct("banana", "Kilo", "1.0");
         springWebApplication.addClient(1);
 
         springWebApplication.addProductToClientCart(1,"banana",10);
@@ -145,14 +145,24 @@ public class TestWebService {
     @Test
     void testDeleteCartClient(){
         SpringWebApplication springWebApplication = new SpringWebApplication();
-        springWebApplication.addProduct("frites","kilo", "2.2");
+        springWebApplication.addProduct("frites","Kilo", "2.2");
         springWebApplication.addClient(1);
         Product product = springWebApplication.addProductToClientCart(1,"frites",2);
 
         Product p = springWebApplication.deleteProductFromClientCart(1,"frites");
 
-        Assertions.assertThat(springWebApplication.passerEnCaisse(1)).isEqualTo(0);
+        Assertions.assertThat(springWebApplication.deleteProductFromClientCart(1,"npk")).isNull();
 
+        Assertions.assertThat(springWebApplication.passerEnCaisse(1)).isEqualTo(0);
+    }
+    
+    @Test
+    void testProductByName(){
+        SupermarketCatalog catalog = new BasicCatalog();
+        catalog.addProduct(new Product("frites", ProductUnit.Each), 12);
+
+        Assertions.assertThat(catalog.getProductByName("npk")).isNull();
+        Assertions.assertThat(catalog.getProductByName("frites")).isInstanceOf(Product.class);
     }
 
     @Test
