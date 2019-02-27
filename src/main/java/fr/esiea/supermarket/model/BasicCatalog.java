@@ -1,11 +1,7 @@
 package fr.esiea.supermarket.model;
 
-import fr.esiea.supermarket.model.Product;
-import fr.esiea.supermarket.model.SupermarketCatalog;
-
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BasicCatalog implements SupermarketCatalog {

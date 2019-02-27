@@ -1,8 +1,12 @@
 package fr.esiea.supermarket.model;
 
+import fr.esiea.supermarket.model.Offers.*;
+import fr.esiea.supermarket.model.Offers.Offer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static fr.esiea.supermarket.model.Offers.SpecialOfferType.*;
 
 public class Teller {
 
@@ -14,7 +18,17 @@ public class Teller {
     }
 
     public void addSpecialOffer(SpecialOfferType offerType, Product product, double argument) {
-        this.offers.put(product, new Offer(offerType, product, argument));
+        if (offerType == FiveForAmount) {
+            this.offers.put(product, new FiveForAmountOffer(product, argument));
+        } else if (offerType == ThreeForTwo) {
+            this.offers.put(product, new ThreeForTwoOffer(product, argument));
+        } else if (offerType == TwoForAmount) {
+            this.offers.put(product, new TwoForAmountOffer(product, argument));
+        } else if (offerType == TenPercentDiscount) {
+            this.offers.put(product, new TenPercentDiscount(product, argument));
+        }else if (offerType == TenPercentForEachOneOfThem) {
+            this.offers.put(product, new TenPercentForEachOneOfThem(product, argument));
+        }
     }
 
     public Receipt checksOutArticlesFrom(ShoppingCart theCart) {

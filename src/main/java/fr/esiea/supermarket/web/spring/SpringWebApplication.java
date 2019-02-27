@@ -8,6 +8,7 @@ import java.util.Map;
 import fr.esiea.supermarket.ReceiptPrinter;
 import fr.esiea.supermarket.model.BasicCatalog;
 import fr.esiea.supermarket.model.*;
+import fr.esiea.supermarket.model.Offers.SpecialOfferType;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.PathVariable;

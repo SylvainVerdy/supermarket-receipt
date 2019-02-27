@@ -1,5 +1,7 @@
 package fr.esiea.supermarket.model;
 
+import fr.esiea.supermarket.model.Offers.Offer;
+import fr.esiea.supermarket.model.Offers.SpecialOfferType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -32,9 +34,9 @@ public class SupermarketTest {
         Assertions.assertThat(productValue).isEqualTo(expectedProductValue);
 
 
-        Offer offer = new Offer(SpecialOfferType.TenPercentDiscount, toothbrush, 10.0);
+        ReceiptItem Item = new ReceiptItem(toothbrush,2,0.99,0.99*2);
         Product expectedResult = toothbrush;
-        Assertions.assertThat(expectedResult).isEqualTo(offer.getProduct());
+        Assertions.assertThat(expectedResult).isEqualTo(Item.getProduct());
     }
 
     @Test
