@@ -6,7 +6,6 @@ import fr.esiea.supermarket.model.Offers.SpecialOfferType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-
 public class TestReceiptPrinter {
 
     @Test
@@ -69,13 +68,11 @@ public class TestReceiptPrinter {
     @Test
     public void testReceiptRemoveItem() {
         SupermarketCatalog catalog = new FakeCatalog();
-        Product toothbrush = new Product("toothbrush", ProductUnit.Each);
-        catalog.addProduct(toothbrush,1);
+        Product pen = new Product("pen", ProductUnit.Each);
+        catalog.addProduct(pen, 1.00);
         ShoppingCart cart = new ShoppingCart();
-        Teller teller = new Teller(catalog);
-        Receipt receipt = teller.checksOutArticlesFrom(cart);
-        cart.removeItem(toothbrush);
-        Assertions.assertThat(receipt.getTotalPrice()).as("The Cart is empty").isEqualTo(0);
-
+        cart.addItemQuantity(pen, 3);
+        cart.removeItem(pen);
+        Assertions.assertThat(cart.removeItem(pen)).isFalse();
     }
 }

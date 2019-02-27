@@ -30,7 +30,7 @@ public class ShoppingCart {
         }
     }
 
-    public void removeItem(Product product){
+    public boolean removeItem(Product product){
         if (productQuantities.containsKey(product)) {
             // we had to remove the element like this
             Iterator<ProductQuantity> it = items.iterator();
@@ -43,9 +43,10 @@ public class ShoppingCart {
                     break;
                 }
             }
-
             productQuantities.remove(product);
+            return true;
         }
+        return false;
     }
 
     void handleOffers(Receipt receipt, Map<Product, Offer> offers, SupermarketCatalog catalog) {
