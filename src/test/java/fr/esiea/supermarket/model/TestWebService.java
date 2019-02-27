@@ -85,8 +85,35 @@ public class TestWebService {
         cart.addItemQuantity(product,3);
         double prixtotal = springWebApplication.passerEnCaisse(1);
         double prix_calcul = 4.4;
-        System.out.println("prix"+cart.productQuantities());
         Assertions.assertThat(prixtotal).isEqualTo(prix_calcul);
     }
+ 
+    @Test
+    public void testSpecialOffer(){
 
+        SpringWebApplication springWebApplication = new SpringWebApplication();
+        springWebApplication.addProduct("banana", "kilo", "1.0");
+        springWebApplication.addClient(1);
+
+        springWebApplication.addProductToClientCart(1,"banana",10);
+        springWebApplication.addSpecialOffer("TenPercentDiscount", "banana", "1");
+
+        Assertions.assertThat(springWebApplication.passerEnCaisse(1)).isEqualTo(9.9);
+    }
+
+
+    @Test
+    public void testPasserEnCaisse2(){
+
+        SpringWebApplication springWebApplication = new SpringWebApplication();
+        springWebApplication.addProduct("banana", "Kilo", "1.0");
+        springWebApplication.addClient(1);
+
+        springWebApplication.addProductToClientCart(1,"banana",8);
+
+        Assertions.assertThat(springWebApplication.passerEnCaisse2(1)).isEqualTo("banana                              8.00\n" +
+                "  1.00 * 8.000\n" +
+                "\n" +
+                "Total:                              8.00");
+    }
 }
