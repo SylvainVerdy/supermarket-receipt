@@ -5,17 +5,10 @@ package fr.esiea.supermarket.model;
 import fr.esiea.supermarket.web.spring.SpringWebApplication;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.web.servlet.view.RedirectView;
-
-
-import javax.validation.constraints.Null;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 public class TestWebService {
 
-    private SupermarketCatalog catalog = new BasicCatalog();
     @Test
     public void TestAddProduct(){
 
@@ -24,7 +17,7 @@ public class TestWebService {
 
         Product product = springWebApplication.listSellableProducts().iterator().next();
         Assertions.assertThat(product.getName().equals("banana")).isTrue();
-        Assertions.assertThat(product.getUnit().equals("kilo")).isFalse();
+        Assertions.assertThat(product.getUnit().equals("kilo")).isTrue();
 
     }
     @Test
@@ -36,14 +29,27 @@ public class TestWebService {
     }
 
     @Test
-    void testRemoveProduct() {
+    public void TestDeleteProduct() {
+
         SpringWebApplication springWebApplication = new SpringWebApplication();
-        final Product bagofrice = new Product("frites", ProductUnit.Each);
-        springWebApplication.addProduct("frites","kilo", "2.2");
+        springWebApplication.deleteProduct("banana", "kilo", "1.0");
 
         Product product = springWebApplication.listSellableProducts().iterator().next();
-        springWebApplication.deleteProduct("frites");
-        Assertions.assertThat(product.getName().equals("frites")).isTrue();
+        Assertions.assertThat(product.getName().equals("banana")).isFalse();
+        Assertions.assertThat(product.getUnit().equals("kilo")).isFalse();
+
     }
+
+    @Test
+    public void TestAddSpecialOffer() {
+
+        SpringWebApplication springWebApplication = new SpringWebApplication();
+        springWebApplication.addSpecialOffer("TenPercent", "Banana", "10");
+        Product product = springWebApplication.addSpecialOffer().iterator().next();
+        Assertions.assertThat(springWebApplication.addSpecialOffer().iterator().next()).isEqualTo(product);
+
+
+    }
+
 
 }

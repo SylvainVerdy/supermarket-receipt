@@ -56,7 +56,7 @@ public class SpringWebApplication {
     }
 
     @RequestMapping("/products/delete")
-    public void deleteProduct(@RequestParam("name") String name){
+    public void deleteProduct(String banana, String kilo, @RequestParam("name") String name){
         catalog.deleteProduct(name);
     }
 
