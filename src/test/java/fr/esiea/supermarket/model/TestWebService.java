@@ -10,12 +10,19 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.constraints.Null;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 public class TestWebService {
 
     private SupermarketCatalog catalog = new BasicCatalog();
+    private Map<Integer, ShoppingCart> paniers = new HashMap<>();
+    Teller teller = new Teller(catalog);
+    ShoppingCart cart = paniers.get(1);
+
     @Test
     public void TestAddProduct(){
 
@@ -45,5 +52,16 @@ public class TestWebService {
         springWebApplication.deleteProduct("frites");
         Assertions.assertThat(product.getName().equals("frites")).isTrue();
     }
+
+    @Test
+    void testAddClient(){
+        SpringWebApplication springWebApplication = new SpringWebApplication();
+        springWebApplication.addProduct("frites","kilo", "2.2");
+        springWebApplication.addClient(1);
+        Product panier_produit1 = springWebApplication.addProductToClientCart(1,"banana",2);
+        Product product = springWebApplication.listSellableProducts().iterator().next();
+        Assertions.assertThat(springWebApplication.addClient(1)).isEqualTo(-1);
+    }
+
 
 }
