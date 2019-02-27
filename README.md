@@ -33,13 +33,13 @@ When you're confident you can handle this code, implement the new feature descri
 
 - [x] TP1 *(100%)*
 - [x] TP2 *(100%)*
-- [x] TP3 *(85%)*
-- [ ] TP4 *(80%)*
+- [x] TP3 *(90%)*
+- [x] TP4 *(95%)*
 
 ### Project Team :
 
 - Sidi mohamed Leghlale (Smohamedl)
 - Harouna Soumare (Asoumy)
 - Sylvain Verdy (SylvainVerdy)
-- Kemgouo Tchassem Mike (mkt17)
+- Kemgouo Tchassem Mike (mkt26)
 
