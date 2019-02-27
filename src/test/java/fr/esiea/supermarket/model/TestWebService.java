@@ -6,6 +6,7 @@ import fr.esiea.supermarket.web.spring.SpringWebApplication;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.view.RedirectView;
+import sun.rmi.runtime.NewThreadAction;
 
 
 import javax.validation.constraints.Null;
@@ -70,6 +71,8 @@ public class TestWebService {
         ShoppingCart cart = new ShoppingCart();
         cart.addItemQuantity(product,3);
         Assertions.assertThat(cart.productQuantities()).isNotEmpty();
+        Assertions.assertThat(cart.productQuantities()).isNotNull();
+
     }
 
 }
