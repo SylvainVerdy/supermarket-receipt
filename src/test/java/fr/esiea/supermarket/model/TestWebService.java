@@ -75,4 +75,18 @@ public class TestWebService {
 
     }
 
+    @Test
+    void testPassageEnCaisse(){
+        SpringWebApplication springWebApplication = new SpringWebApplication();
+        springWebApplication.addProduct("frites","kilo", "2.2");
+        springWebApplication.addClient(1);
+        Product product = springWebApplication.addProductToClientCart(1,"frites",2);
+        ShoppingCart cart = new ShoppingCart();
+        cart.addItemQuantity(product,3);
+        double prixtotal = springWebApplication.passerEnCaisse(1);
+        double prix_calcul = 4.4;
+        System.out.println("prix"+cart.productQuantities());
+        Assertions.assertThat(prixtotal).isEqualTo(prix_calcul);
+    }
+
 }
