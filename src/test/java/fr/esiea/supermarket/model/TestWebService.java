@@ -87,9 +87,9 @@ public class TestWebService {
         double prix_calcul = 4.4;
         Assertions.assertThat(prixtotal).isEqualTo(prix_calcul);
     }
- 
+
     @Test
-    public void testSpecialOffer(){
+    public void testSpecialOfferTenPercentDiscount(){
 
         SpringWebApplication springWebApplication = new SpringWebApplication();
         springWebApplication.addProduct("banana", "kilo", "1.0");
@@ -101,6 +101,59 @@ public class TestWebService {
         Assertions.assertThat(springWebApplication.passerEnCaisse(1)).isEqualTo(9.9);
     }
 
+
+
+    @Test
+    public void testSpecialOfferThreeForTwo(){
+
+        SpringWebApplication springWebApplication = new SpringWebApplication();
+        springWebApplication.addProduct("banana", "kilo", "1.0");
+        springWebApplication.addClient(1);
+
+        springWebApplication.addProductToClientCart(1,"banana",10);
+        springWebApplication.addSpecialOffer("ThreeForTwo", "banana", "1");
+
+        Assertions.assertThat(springWebApplication.passerEnCaisse(1)).isEqualTo(7.0);
+    }
+
+    @Test
+    public void testSpecialOfferFiveForAmount(){
+
+        SpringWebApplication springWebApplication = new SpringWebApplication();
+        springWebApplication.addProduct("banana", "kilo", "1.0");
+        springWebApplication.addClient(1);
+
+        springWebApplication.addProductToClientCart(1,"banana",10);
+        springWebApplication.addSpecialOffer("FiveForAmount", "banana", "1");
+
+        Assertions.assertThat(springWebApplication.passerEnCaisse(1)).isEqualTo(2.0);
+    }
+
+    @Test
+    public void testSpecialOfferTwoForAmount(){
+
+        SpringWebApplication springWebApplication = new SpringWebApplication();
+        springWebApplication.addProduct("banana", "kilo", "1.0");
+        springWebApplication.addClient(1);
+
+        springWebApplication.addProductToClientCart(1,"banana",10);
+        springWebApplication.addSpecialOffer("TwoForAmount", "banana", "1");
+
+        Assertions.assertThat(springWebApplication.passerEnCaisse(1)).isEqualTo(5.0);
+    }
+
+    @Test
+    void testDeleteCartClient(){
+        SpringWebApplication springWebApplication = new SpringWebApplication();
+        springWebApplication.addProduct("frites","kilo", "2.2");
+        springWebApplication.addClient(1);
+        Product product = springWebApplication.addProductToClientCart(1,"frites",2);
+
+        Product p = springWebApplication.deleteProductFromClientCart(1,"frites");
+
+        Assertions.assertThat(springWebApplication.passerEnCaisse(1)).isEqualTo(0);
+
+    }
 
     @Test
     public void testPasserEnCaisse2(){
@@ -116,4 +169,7 @@ public class TestWebService {
                 "\n" +
                 "Total:                              8.00");
     }
+
+
+
 }
